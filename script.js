@@ -20,7 +20,25 @@ function criarCobrinha(){
     }
 }
 
+//transmitindo o toque da tecla para o jogo(evento)
+document.addEventListener("keydown",update);
+
+function update(event){
+    //Aqui você impossibilita ela ir na direção ao contrário da cabeça dela
+    if(event.keyCode == 37 && direction !="right") direction="left";
+    if(event.keyCode == 38 && direction !="Down") direction="Up";
+    if(event.keyCode == 39 && direction !="left") direction="right";
+    if(event.keyCode == 40 && direction !="Up") direction="Down";
+}
+
 function iniciarJogo(){
+     
+    //Criando plano cartesiano atravessando as paredes
+    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
+    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
+    if(snake[0].y > 15 * box && direction == "Down") snake[0].y = 0;
+    if(snake[0].y < 0 && direction == "Up") snake[0].y = 16 * box;
+    
     criarBG();
     criarCobrinha();
 
@@ -29,11 +47,11 @@ function iniciarJogo(){
     let snakeY = snake[0].y;
 
     //coordenadas para o lado que a cobra vai
-    if(direction == 'right') snakeX +=box; 
-    if(direction == 'left') snakeX -=box; 
+    if(direction == "right") snakeX +=box; 
+    if(direction == "left") snakeX -=box; 
 
-    if(direction == 'Up') snakeY -=box; 
-    if(direction == 'Donw') snakeY +=box; 
+    if(direction == "Up") snakeY -=box; 
+    if(direction == "Down") snakeY +=box; 
 
     // retirando o ultimo elemento da array
     snake.pop();
@@ -48,6 +66,7 @@ function iniciarJogo(){
 
 //tempo para inicialização do jogo
 let jogo = setInterval(iniciarJogo,100);
+
 
 
 
