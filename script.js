@@ -44,14 +44,15 @@ function update(event){
     if(event.keyCode == 40 && direction !="Up") direction="Down";
 }
 
-function iniciarJogo(){
-     
+function iniciarJogo(){     
     //Criando plano cartesiano atravessando as paredes
     if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
     if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
     if(snake[0].y > 15 * box && direction == "Down") snake[0].y = 0;
     if(snake[0].y < 0 && direction == "Up") snake[0].y = 16 * box;
     
+    
+    //chamando as funções
     criarBG();
     criarCobrinha();
     drawFood();
@@ -67,8 +68,14 @@ function iniciarJogo(){
     if(direction == "Up") snakeY -=box; 
     if(direction == "Down") snakeY +=box; 
 
-    // retirando o ultimo elemento da array
+    //Aumentando o tamanho da cobrinha
+    if(snakeX != food.x || snakeY != food.y) {
+        // retirando o ultimo elemento da array
     snake.pop();
+    }else{
+        food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
+    }
 
     //acrescetando um elemento a frente(cabeça)
     let newHead={
